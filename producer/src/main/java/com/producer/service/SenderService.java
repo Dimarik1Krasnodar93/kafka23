@@ -13,9 +13,10 @@ public class SenderService {
 
 
     public void sendMessage(String key, String value) {
-        //в топик
+        //в топик без partitions
         val future = kafkaTemplate.send(KafkaProducerConfig.TOPIC_NAME, key, value);
-        //без топика
-        //var futureDefault = kafkaTemplate.sendDefault(key, value);
+        //в топик с partitions
+        val future2
+                = kafkaTemplate.send(KafkaProducerConfig.TOPIC_NAME_2,  2, key, value);
     }
 }

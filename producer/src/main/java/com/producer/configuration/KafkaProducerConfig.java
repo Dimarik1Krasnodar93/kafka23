@@ -19,7 +19,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 @Configuration
 public class KafkaProducerConfig {
     public static final String TOPIC_NAME = "exmp_topic";
-
+    public static final String TOPIC_NAME_2 = "exmp_topic_2";
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String addresses;
 
@@ -27,6 +27,15 @@ public class KafkaProducerConfig {
     public NewTopic example() {
         return TopicBuilder
                 .name(TOPIC_NAME)
+                .partitions(3)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic example2() {
+        return TopicBuilder
+                .name(TOPIC_NAME_2)
                 .partitions(3)
                 .replicas(1)
                 .build();
