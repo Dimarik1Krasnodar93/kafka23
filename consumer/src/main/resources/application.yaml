@@ -17,7 +17,9 @@ spring:
                 class: org.apache.kafka.common.serialization.StringDeserializer
             value:
               delegate:
-                class: org.apache.kafka.common.serialization.JsonDeserializer
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
           json:
             trusted:
               packages: '*'
+            type:
+              mapping: com.producer.dto.Student:com.consumer.dto.Student
