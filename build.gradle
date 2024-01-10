@@ -15,7 +15,10 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
 }
+
+
 
 repositories {
     mavenCentral()
@@ -31,3 +34,5 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
