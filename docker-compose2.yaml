@@ -31,17 +31,19 @@ services:
   producer:
     build:
       context: .
-      dockerfile: Dockerfile2
-    environment:
-      - SERVICE_DIR=producer/build/libs/
+      dockerfile: Dockerfile3
+      args:
+        - SERVICE_DIR=producer/build/libs/
+        - JAR_PATH=app/producer-0.0.1-SNAPSHOT.jar
     ports:
       - "8083:8083"
   consumer:
     build:
       context: .
-      dockerfile: Dockerfile2
-    environment:
-      - SERVICE_DIR=consumer/build/libs/
+      dockerfile: Dockerfile3
+      args:
+        - SERVICE_DIR=consumer/build/libs/
+        - JAR_PATH=app/consumer-0.0.1-SNAPSHOT.jar
     ports:
       - "8082:8082"
 volumes:

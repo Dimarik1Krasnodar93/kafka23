@@ -1,0 +1,11 @@
+FROM gradle:latest AS BUILD
+RUN mkdir app
+ARG SERVICE_DIR
+ENV SERVICE_DIR=${SERVICE_DIR}
+ARG JAR_PATH
+ENV JAR_PATH=${JAR_PATH}
+COPY $SERVICE_DIR/ /app/
+RUN gradle build
+
+FROM openjdk:21
+ENTRYPOINT ["java", "-jar", "/app/producer-0.0.1-SNAPSHOT.jar"]
