@@ -1,6 +1,0 @@
-FROM gradle:latest AS BUILD
-WORKDIR /home/gradle/app
-COPY producer/ /home/gradle/app/
-RUN gradle build
-FROM openjdk:21
-ENTRYPOINT ["java", "-jar", "producer-0.0.1-SNAPSHOT.jar"]

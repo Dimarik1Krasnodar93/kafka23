@@ -1,7 +1,11 @@
+FROM gradle:latest AS BUILD
+RUN mkdir -p /app
+ARG SERVICE_DIR
+
+COPY $SERVICE_DIR/ /home/app/
+RUN cd /home/app/ && gradle build
 FROM openjdk:21
-RUN mkdir app
-#ARG SERVICE_DIR
-#ENV SERVICE_DIR=${SERVICE_DIR}
-#COPY $SERVICE_DIR/*.jar /app/main3.jar
-COPY producer/build/libs/*.jar /app/main5.jar
-ENTRYPOINT ["java", "-jar", "/app/main5.jar"]
+COPY --from=build /home/app/build/libs .
+ARG JAR_NAME
+ENTRYPOINT ["java", "-jar", "${JAR_NAME}"]
+#ENTRYPOINT ["java", "-jar", "producer-0.0.1-SNAPSHOT.jar"]

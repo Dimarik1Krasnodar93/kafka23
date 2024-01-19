@@ -28,13 +28,26 @@ services:
       CUSTOM_INIT_SCRIPT: |-
         echo -e 'KafkaServer {\norg.apache.kafka.common.security.scram.ScramLoginModule required\n username="adminscram"\n password="admin-secret";\n org.apache.kafka.common.security.plain.PlainLoginModule required\n username="adminplain"\n password="admin-secret"\n user_adminplain="admin-secret";\n  };' > /opt/kafka/config/kafka_server_jaas.conf;
         /opt/kafka/bin/kafka-configs.sh --zookeeper zookeeper:2181 --alter --add-config 'SCRAM-SHA-256=[password=admin-secret-256],SCRAM-SHA-512=[password=admin-secret-512]' --entity-type users --entity-name adminscram
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_DIR=producer
+        - JAR_NAME=producer-0.0.1-SNAPSHOT.jar
     ports:
-      - 8089:8080
-    environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
-      DYNAMIC_CONFIG_ENABLED: 'true'
+      - "8083:8083"
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_DIR=consumer
+        - JAR_NAME=consumer-0.0.1-SNAPSHOT.jar
+    ports:
+      - "8082:8082"
 volumes:
   db:
+networks:
+  docker_kafka:
+    driver: bridge
