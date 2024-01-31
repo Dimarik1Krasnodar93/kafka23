@@ -21,6 +21,7 @@ public class KafkaProducerConfig {
     public static final String TOPIC_NAME = "exmp_topic";
     public static final String TOPIC_NAME_2 = "exmp_topic_2";
     public static final String TOPIC_NAME_3 = "exmp_topic_3_";
+    public static final String TOPIC_NAME_3 = "exmp_topic_3_";
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String addresses;
 
